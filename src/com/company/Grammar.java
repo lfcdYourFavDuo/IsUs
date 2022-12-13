@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Grammar {
     private final List<String> nonTerminals;
@@ -21,7 +22,8 @@ public class Grammar {
     private void getGrammarFromFile() {
         try {
             int i = 0;
-            for (String line : Files.readAllLines(Paths.get("C:\\UBB Sem 5\\FLAC\\labcuIulia\\src\\data\\g1.txt"))) {
+            for (String line : Files.readAllLines(Paths.get("C://Users//Iulia//Documents//GitHub//IsUs//src//data//g1.txt"))) {
+                int prodNumber = 1;
                 if (i <= 2){
                     String[] tokens = line.split(" ");
                     for (String token : tokens) {
@@ -40,10 +42,12 @@ public class Grammar {
 
                 if (i > 2) {
                     String[] tokens = line.split(" -> ");
-                    List<List<String>> rules = new ArrayList<>();
+                    Map<Integer, List<String>> rules = new HashMap<>();
 
-                    for ( String rule: tokens[1].split(" \\| "))
-                        rules.add(Arrays.asList(rule.split(" ")));
+                    for ( String rule: tokens[1].split(" \\| ")) {
+                        rules.put(prodNumber, Arrays.stream(rule.split(" ")).collect(Collectors.toList()));
+                        prodNumber++;
+                    }
                     productions.add(new Production(tokens[0], rules));
                 }
                 i++;
@@ -56,7 +60,7 @@ public class Grammar {
     Set<Production> getProductionsContainingNonterminal(String nonterminal) {
         Set<Production> productionsForNonterminal = new HashSet<>();
         for (Production production : productions) {
-            for (List<String> rule : production.getRules())
+            for (List<String> rule : production.getRules().values())
                 if (rule.contains(nonterminal))
                     productionsForNonterminal.add(production);
         }
@@ -92,6 +96,5 @@ public class Grammar {
     public String toString() {
         return "G =( " + nonTerminals.toString() + ", " + terminals.toString() + ", " +
                 productions.toString() + ", " + startingSymbol + " )";
-
     }
 }
