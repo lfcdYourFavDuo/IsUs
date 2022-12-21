@@ -68,15 +68,13 @@ public class Tests {
         assert parser.getWorkingStack().peek().equals("A 2");
         assert parser.getInputStack().get(0).equals("b");
 
+        System.out.println(workingStack);
         parser.anotherTry();
         parser.anotherTry();
         parser.anotherTry();
 
         assert parser.getWorkingStack().size()==2;
         assert parser.getInputStack().size()==1;
-
-
-
     }
 
 

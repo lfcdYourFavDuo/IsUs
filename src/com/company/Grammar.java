@@ -22,7 +22,7 @@ public class Grammar {
     private void getGrammarFromFile() {
         try {
             int i = 0;
-            for (String line : Files.readAllLines(Paths.get("C://Users//Iulia//Documents//GitHub//IsUs//src//data//g1.txt"))) {
+            for (String line : Files.readAllLines(Paths.get("C:\\UBB Sem 5\\FLAC\\Lab4\\IsUs\\src\\data\\g1.txt"))) {
                 int prodNumber = 1;
                 if (i <= 2){
                     String[] tokens = line.split(" ");
